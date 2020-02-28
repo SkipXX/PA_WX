@@ -860,5 +860,5 @@ void PA_WXFrame::On_WhatIsKDE_Selected(wxCommandEvent& event)
 
 void PA_WXFrame::On_Sourcecode_Selected(wxCommandEvent& event)
 {
-    wxLaunchDefaultBrowser("//!");
+    wxLaunchDefaultBrowser("https://github.com/SkipXX/PA_WX");
 }
