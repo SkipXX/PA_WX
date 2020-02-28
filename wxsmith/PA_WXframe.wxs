@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxFrame" name="PA_WXFrame">
+		<title>This is an application.</title>
+		<size>400,500</size>
+		<id_arg>0</id_arg>
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxStaticBox" name="ID_STATICBOX6" variable="StaticBox6" member="yes">
+			<label>Peak Calculations</label>
+			<pos>216,136</pos>
+			<size>176,144</size>
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX3" variable="plot_peaks" member="yes">
+			<label>Plot Peaks</label>
+			<pos>224,192</pos>
+			<size>88,40</size>
+			<tooltip>enables the finding of peaks when plotting</tooltip>
+			<handler function="On_plot_Click" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxStaticBox" name="ID_STATICBOX5" variable="StaticBox5" member="yes">
+			<pos>8,264</pos>
+			<size>104,112</size>
+		</object>
+		<object class="wxStaticBox" name="ID_STATICBOX3" variable="StaticBox3" member="yes">
+			<label>Remove Background</label>
+			<pos>8,152</pos>
+			<size>192,112</size>
+			<tooltip>tries to remove linear(in the intervall) background</tooltip>
+		</object>
+		<object class="wxStaticBox" name="ID_STATICBOX4" variable="StaticBox4" member="yes">
+			<label>Cut Points</label>
+			<pos>16,200</pos>
+			<size>176,56</size>
+		</object>
+		<object class="wxStaticBox" name="ID_STATICBOX2" variable="StaticBox2" member="yes">
+			<pos>8,104</pos>
+			<size>192,48</size>
+		</object>
+		<object class="wxStaticText" name="ID_dPhi" variable="dPhi" member="yes">
+			<label>dPhi:</label>
+			<pos>16,80</pos>
+			<size>40,24</size>
+			<tooltip>distance between points on X axes</tooltip>
+		</object>
+		<object class="wxStaticBox" name="ID_STATICBOX1" variable="StaticBox1" member="yes">
+			<pos>272,360</pos>
+			<size>120,80</size>
+		</object>
+		<object class="wxButton" name="ID_BUTTON1" variable="gnuplot_plot" member="yes">
+			<label>gnuplot &lt;&lt;</label>
+			<pos>8,8</pos>
+			<size>88,24</size>
+			<tooltip>direct gnuplot input</tooltip>
+			<handler function="Ongnuplot_plotClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL1" variable="gnuplot_plot_text" member="yes">
+			<pos>104,8</pos>
+			<size>288,24</size>
+			<tooltip>direct gnuplot input</tooltip>
+			<handler function="Ongnuplot_plotClick" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON2" variable="plot" member="yes">
+			<label>Plot</label>
+			<pos>336,376</pos>
+			<size>48,23</size>
+			<tooltip>plot graph</tooltip>
+			<handler function="On_plot_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON3" variable="Load_File" member="yes">
+			<label>Load Data</label>
+			<pos>104,40</pos>
+			<size>88,24</size>
+			<tooltip>keep textbox empty for file dialog</tooltip>
+			<handler function="On_Load_File_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL3" variable="Load_File_Text" member="yes">
+			<pos>200,40</pos>
+			<size>192,24</size>
+			<tooltip>keep textbox empty for file dialog</tooltip>
+			<handler function="On_Load_File_Click" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX1" variable="check_auto_plot" member="yes">
+			<label>auto</label>
+			<checked>1</checked>
+			<pos>280,376</pos>
+			<size>56,21</size>
+			<tooltip>Plot graph after each change?</tooltip>
+			<handler function="On_plot_Click" entry="EVT_CHECKBOX" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON4" variable="Button1" member="yes">
+			<label>Norm</label>
+			<pos>336,408</pos>
+			<size>48,24</size>
+			<tooltip>Norm graph to max=100</tooltip>
+			<handler function="On_N_Norm_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON5" variable="Back_Button" member="yes">
+			<label>Back</label>
+			<pos>120,336</pos>
+			<size>80,40</size>
+			<tooltip>revert last change</tooltip>
+			<handler function="On_Back_Button_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxCheckBox" name="ID_CHECKBOX2" variable="check_auto_N_Norm" member="yes">
+			<label>auto</label>
+			<checked>1</checked>
+			<pos>280,408</pos>
+			<size>56,24</size>
+			<tooltip>Norm graph after each change?</tooltip>
+		</object>
+		<object class="wxButton" name="ID_BUTTON6" variable="format_al" member="yes">
+			<label>0-120 Format</label>
+			<pos>104,80</pos>
+			<size>96,24</size>
+			<tooltip>formats data to range 0 to 120</tooltip>
+			<handler function="On_format_all_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON7" variable="remove_noise" member="yes">
+			<label>Remove Noise</label>
+			<pos>16,120</pos>
+			<size>104,24</size>
+			<tooltip>applies a kernel density estimation with a parabolic kernal</tooltip>
+			<handler function="On_remove_noise_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL2" variable="dPhi_textbox" member="yes">
+			<value>0.01</value>
+			<pos>56,80</pos>
+			<size>40,21</size>
+			<tooltip>distance between points on X axes</tooltip>
+			<handler function="On_remove_noise_Click" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL4" variable="remove_noise_K" member="yes">
+			<value>5</value>
+			<pos>160,120</pos>
+			<size>32,21</size>
+			<tooltip>number of points to left/right in the kernel density estimation</tooltip>
+			<handler function="On_remove_noise_Click" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON8" variable="remove_background" member="yes">
+			<label>start</label>
+			<pos>112,176</pos>
+			<size>80,24</size>
+			<tooltip>tries to remove linear(in the intervall) background</tooltip>
+			<handler function="Onremove_backgroundClick" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL5" variable="remove_background_K" member="yes">
+			<value>200</value>
+			<pos>64,176</pos>
+			<size>40,21</size>
+			<tooltip>number of points to left/right in the intervall</tooltip>
+			<handler function="Onremove_backgroundClick" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL6" variable="remove_background_cut_high" member="yes">
+			<value>200</value>
+			<pos>64,224</pos>
+			<size>40,21</size>
+			<tooltip>cuts X number of highest points to remove peaks</tooltip>
+			<handler function="Onremove_backgroundClick" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL7" variable="remove_background_cut_low" member="yes">
+			<value>150</value>
+			<pos>144,224</pos>
+			<size>40,21</size>
+			<tooltip>removes the X lowest points to balance out the high point removal</tooltip>
+			<handler function="Onremove_backgroundClick" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON9" variable="DFT" member="yes">
+			<label>DFT</label>
+			<pos>120,304</pos>
+			<size>80,24</size>
+			<tooltip>fourier transform</tooltip>
+			<handler function="On_DFT_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON10" variable="neg_zero" member="yes">
+			<label>Neg to 0</label>
+			<pos>120,272</pos>
+			<size>80,24</size>
+			<tooltip>sets all negativ values to 0</tooltip>
+			<handler function="On_neg_zero_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL8" variable="plot_peaks_K" member="yes">
+			<value>50</value>
+			<pos>344,192</pos>
+			<size>40,21</size>
+			<tooltip>number of points to left/right in the intervall</tooltip>
+			<handler function="On_plot_Click" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxTextCtrl" name="ID_TEXTCTRL9" variable="plot_peaks_H" member="yes">
+			<value>400</value>
+			<pos>344,216</pos>
+			<size>40,21</size>
+			<tooltip>threshhold value to determine peak</tooltip>
+			<handler function="On_plot_Click" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxChoice" name="ID_CHOICE1" variable="plot_peaks_type" member="yes">
+			<content>
+				<item>S1 (max dif)</item>
+				<item>S2 (avg of dif)</item>
+				<item>S3 (dif of avg)</item>
+				<item>S4 (Entropy)</item>
+			</content>
+			<selection>3</selection>
+			<pos>232,160</pos>
+			<size>144,38</size>
+			<tooltip>different function for peak finding algorithm</tooltip>
+			<handler function="On_plot_Click" entry="EVT_CHOICE" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON11" variable="DO_STUFF" member="yes">
+			<label>DO STUFF</label>
+			<pos>120,480</pos>
+			<size>144,24</size>
+			<handler function="On_DO_STUFF_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_BUTTON12" variable="PEAKS" member="yes">
+			<label>Compare</label>
+			<pos>224,240</pos>
+			<size>88,31</size>
+			<tooltip>tries to find peaks and compares with database</tooltip>
+			<handler function="On_PEAKS_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxTextCtrl" name="ID_PEAKS_epsilon" variable="PEAKS_epsilon" member="yes">
+			<value>0.2</value>
+			<pos>344,248</pos>
+			<size>40,21</size>
+			<tooltip>epsion; max distance to database to identify peak</tooltip>
+			<handler function="On_PEAKS_Click" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxButton" name="ID_set_zero" variable="set_zero" member="yes">
+			<label>Set Zero</label>
+			<pos>16,280</pos>
+			<size>88,24</size>
+			<tooltip>sets graph to 0 from Start to End</tooltip>
+			<handler function="On_set_zero_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxTextCtrl" name="ID_set_zero_start" variable="set_zero_start" member="yes">
+			<value>0</value>
+			<pos>64,312</pos>
+			<size>40,24</size>
+			<tooltip>startvalue for X axis to set zero</tooltip>
+			<handler function="On_set_zero_Click" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxTextCtrl" name="ID_set_zero_end" variable="set_zero_end" member="yes">
+			<value>120</value>
+			<pos>64,344</pos>
+			<size>40,24</size>
+			<tooltip>endvalue for X axis to set zero</tooltip>
+			<handler function="On_set_zero_Click" entry="EVT_TEXT_ENTER" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT1" variable="StaticText1" member="yes">
+			<label>End:</label>
+			<pos>24,344</pos>
+			<tooltip>endvalue for X axis to set zero</tooltip>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT2" variable="StaticText2" member="yes">
+			<label>Start:</label>
+			<pos>24,312</pos>
+			<tooltip>startvalue for X axis to set zero</tooltip>
+		</object>
+		<object class="wxButton" name="ID_PEAK_multiplication" variable="PEAK_multiplication" member="yes">
+			<label>Graph*Database</label>
+			<pos>8,384</pos>
+			<size>144,40</size>
+			<tooltip>multiplies graph with all database files to guess which are the most likely</tooltip>
+			<handler function="On_PEAK_multiplication_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_Save_Graph" variable="Save_Graph" member="yes">
+			<label>Save Graph</label>
+			<pos>8,40</pos>
+			<size>88,24</size>
+			<tooltip>saves current graph to .xy file</tooltip>
+			<handler function="On_Save_Graph_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT3" variable="StaticText3" member="yes">
+			<label>K:</label>
+			<pos>136,120</pos>
+			<tooltip>number of points to left/right in the kernel density estimation</tooltip>
+		</object>
+		<object class="wxButton" name="ID_standard_format" variable="standard_format" member="yes">
+			<label>Standard Format</label>
+			<pos>216,80</pos>
+			<size>160,48</size>
+			<tooltip>formats graphs in a way that works with many inputs</tooltip>
+			<handler function="On_standard_format_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT4" variable="StaticText4" member="yes">
+			<label>K:</label>
+			<pos>40,176</pos>
+			<tooltip>number of points to left/right in the intervall</tooltip>
+		</object>
+		<object class="wxButton" name="ID_show_again" variable="show_again" member="yes">
+			<label>&lt;- show again</label>
+			<pos>160,384</pos>
+			<size>104,40</size>
+			<tooltip>show output txt file again if new calculation isn&apos;t necessary</tooltip>
+			<handler function="On_show_again_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT5" variable="StaticText5" member="yes">
+			<label>high:</label>
+			<pos>24,224</pos>
+			<size>40,16</size>
+			<tooltip>cuts X number of highest points to remove peaks</tooltip>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT6" variable="StaticText6" member="yes">
+			<label>low:</label>
+			<pos>112,224</pos>
+			<tooltip>removes the X lowest points to balance out the high point removal</tooltip>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT7" variable="epsilon" member="yes">
+			<label>e:</label>
+			<pos>320,248</pos>
+			<size>16,16</size>
+			<tooltip>epsion; max distance to database to identify peak</tooltip>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT8" variable="StaticText7" member="yes">
+			<label>K:</label>
+			<pos>320,192</pos>
+			<tooltip>number of points to left/right in the intervall</tooltip>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT9" variable="StaticText8" member="yes">
+			<label>H:</label>
+			<pos>320,216</pos>
+			<tooltip>threshhold value to determine peak</tooltip>
+		</object>
+		<object class="wxStaticBox" name="ID_STATICBOX7" variable="StaticBox7" member="yes">
+			<label>Manually Add Peaks </label>
+			<pos>216,280</pos>
+			<size>176,80</size>
+		</object>
+		<object class="wxButton" name="ID_add_peak" variable="add_peak" member="yes">
+			<label>Add</label>
+			<pos>232,328</pos>
+			<size>64,23</size>
+			<tooltip>add peak with X and Y value to detected peaks</tooltip>
+			<handler function="On_add_peak_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxButton" name="ID_clear_manual_peaks" variable="clear_manual_peaks" member="yes">
+			<label>Clear All</label>
+			<pos>320,328</pos>
+			<size>64,23</size>
+			<tooltip>clears list of manual inputed peaks</tooltip>
+			<handler function="On_clear_manual_peaks_Click" entry="EVT_BUTTON" />
+		</object>
+		<object class="wxTextCtrl" name="ID_X_man_peak" variable="X_man_peak" member="yes">
+			<pos>248,304</pos>
+			<size>48,21</size>
+			<tooltip>X value for manual peak</tooltip>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT10" variable="StaticText9" member="yes">
+			<label>X:</label>
+			<pos>232,304</pos>
+			<tooltip>X value for manual peak</tooltip>
+		</object>
+		<object class="wxTextCtrl" name="ID_Y_man_peak" variable="Y_man_peak" member="yes">
+			<pos>336,304</pos>
+			<size>48,21</size>
+			<tooltip>Y value for manual peak</tooltip>
+		</object>
+		<object class="wxStaticText" name="ID_STATICTEXT11" variable="StaticText10" member="yes">
+			<label>Y:</label>
+			<pos>320,304</pos>
+			<tooltip>Y value for manual peak</tooltip>
+		</object>
+		<object class="wxMenuBar" variable="MenuBar1" member="no">
+			<object class="wxMenu" variable="Menu3" member="yes">
+				<label>Database</label>
+				<object class="wxMenuItem" name="ID_MENUITEM3" variable="Database_OPEN" member="yes">
+					<label>Open</label>
+					<help>Shows current database file.</help>
+					<handler function="On_Database_OPEN_Selected" entry="EVT_MENU" />
+				</object>
+				<object class="wxMenuItem" name="ID_MENUITEM2" variable="Database_RELOAD" member="yes">
+					<label>Reload</label>
+					<help>Recreates Database-peak file in case of added files.</help>
+					<handler function="On_Database_RELOAD_Selected" entry="EVT_MENU" />
+				</object>
+			</object>
+			<object class="wxMenu" variable="Menu2" member="no">
+				<label>Help</label>
+				<object class="wxMenuItem" name="ID_MENUITEM1" variable="Help_gnuplot_path" member="yes">
+					<label>My gnuplot doesn&apos;t open!</label>
+					<handler function="On_Help_gnuplot_path_Selected" entry="EVT_MENU" />
+				</object>
+				<object class="wxMenuItem" name="ID_MENUITEM4" variable="HowToUse" member="yes">
+					<label>How do I use this app?</label>
+					<handler function="On_HowToUse_Selected" entry="EVT_MENU" />
+				</object>
+				<object class="wxMenuItem" name="ID_MENUITEM5" variable="WhatIsKDE" member="yes">
+					<label>What is a kernel density estimation?</label>
+					<handler function="On_WhatIsKDE_Selected" entry="EVT_MENU" />
+				</object>
+				<object class="wxMenuItem" name="ID_MENUITEM6" variable="Sourcecode" member="yes">
+					<label>Where is the sourcecode?</label>
+					<handler function="On_Sourcecode_Selected" entry="EVT_MENU" />
+				</object>
+			</object>
+		</object>
+		<object class="wxStatusBar" name="ID_STATUSBAR1" variable="StatusBar1" member="yes">
+			<fields>1</fields>
+			<widths>-1</widths>
+			<styles>wxSB_NORMAL</styles>
+		</object>
+		<object class="wxTextEntryDialog" name="ID_TEXTENTRYDIALOG1" variable="Database_RELOAD_INPUT" member="yes">
+			<caption>Reloading Database</caption>
+			<message>Please enter cutoff height for peaks in database(MAX:100 MIN:0):</message>
+			<default_value>10</default_value>
+		</object>
+	</object>
+</wxsmith>

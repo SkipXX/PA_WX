@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="PA_WX" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/PA_WX" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-D__WXDEBUG__" />
+					<Add directory="/mswd" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="/mswd" />
+				</ResourceCompiler>
+				<Linker>
+					<Add library="wxmswd_core" />
+					<Add library="wxbased" />
+					<Add library="wxpngd" />
+					<Add library="wxzlibd" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/PA_WX" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="/msw" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="/msw" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="wxmsw_core" />
+					<Add library="wxbase" />
+					<Add library="wxpng" />
+					<Add library="wxzlib" />
+				</Linker>
+			</Target>
+			<Target title="WX_default">
+				<Option output="bin/WX_default/PA_WX" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/WX_default/" />
+				<Option object_output="obj/WX_default/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wno-deprecated" />
+					<Add option="-std=c++1z" />
+					<Add option="-U__STRICT_ANSI__ -Wno-deprecated-declarations" />
+					<Add directory="$(#wx)/lib/gcc_dll/mswu" />
+					<Add directory="$(#boost)" />
+				</Compiler>
+				<ResourceCompiler>
+					<Add directory="$(#wx)/lib/gcc_dll/mswu" />
+				</ResourceCompiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="libwxmsw30u.a" />
+					<Add library="$(#boost.LIB)/libboost_filesystem-mgw51-mt-x32-1_72.a" />
+					<Add library="$(#boost.LIB)/libboost_iostreams-mgw51-mt-x32-1_72.a" />
+					<Add library="$(#boost.LIB)/libboost_system-mgw51-mt-x32-1_72.a" />
+					<Add directory="$(#wx)/lib/gcc_dll" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-pipe" />
+			<Add option="-mthreads" />
+			<Add option="-D__GNUWIN32__" />
+			<Add option="-D__WXMSW__" />
+			<Add option="-Wall" />
+			<Add directory="$(#wx)/include" />
+		</Compiler>
+		<ResourceCompiler>
+			<Add directory="$(#wx)/include" />
+		</ResourceCompiler>
+		<Linker>
+			<Add option="-mthreads" />
+			<Add library="kernel32" />
+			<Add library="user32" />
+			<Add library="gdi32" />
+			<Add library="winspool" />
+			<Add library="comdlg32" />
+			<Add library="advapi32" />
+			<Add library="shell32" />
+			<Add library="ole32" />
+			<Add library="oleaut32" />
+			<Add library="uuid" />
+			<Add library="comctl32" />
+			<Add library="wsock32" />
+			<Add library="odbc32" />
+		</Linker>
+		<Unit filename="Graph.cpp">
+			<Option target="WX_default" />
+		</Unit>
+		<Unit filename="Graph.h">
+			<Option target="WX_default" />
+		</Unit>
+		<Unit filename="PA_WXApp.cpp" />
+		<Unit filename="PA_WXApp.h" />
+		<Unit filename="PA_WXMain.cpp" />
+		<Unit filename="PA_WXMain.h" />
+		<Unit filename="gnuplot-iostream.h">
+			<Option target="WX_default" />
+		</Unit>
+		<Unit filename="resource.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="wxsmith/PA_WXframe.wxs" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<wxsmith version="1">
+				<gui name="wxWidgets" src="PA_WXApp.cpp" main="PA_WXFrame" init_handlers="necessary" language="CPP" />
+				<resources>
+					<wxFrame wxs="wxsmith/PA_WXframe.wxs" src="PA_WXMain.cpp" hdr="PA_WXMain.h" fwddecl="0" i18n="1" name="PA_WXFrame" language="CPP" />
+				</resources>
+			</wxsmith>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
