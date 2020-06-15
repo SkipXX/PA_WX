@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <wxsmith>
 	<object class="wxFrame" name="PA_WXFrame">
-		<title>This is an application.</title>
 		<size>400,500</size>
+		<maxsize>440,550</maxsize>
 		<id_arg>0</id_arg>
 		<handler function="OnClose" entry="EVT_CLOSE" />
 		<object class="wxStaticBox" name="ID_STATICBOX6" variable="StaticBox6" member="yes">
@@ -37,9 +37,17 @@
 			<size>192,48</size>
 		</object>
 		<object class="wxStaticText" name="ID_dPhi" variable="dPhi" member="yes">
-			<label>dPhi:</label>
-			<pos>16,80</pos>
+			<label>dTheta:</label>
+			<pos>8,80</pos>
 			<size>40,24</size>
+			<font>
+				<size>9</size>
+				<style>normal</style>
+				<weight>normal</weight>
+				<underlined>0</underlined>
+				<family>swiss</family>
+				<face></face>
+			</font>
 			<tooltip>distance between points on X axes</tooltip>
 		</object>
 		<object class="wxStaticBox" name="ID_STATICBOX1" variable="StaticBox1" member="yes">
@@ -137,7 +145,7 @@
 			<handler function="On_remove_noise_Click" entry="EVT_TEXT_ENTER" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON8" variable="remove_background" member="yes">
-			<label>start</label>
+			<label>Start</label>
 			<pos>112,176</pos>
 			<size>80,24</size>
 			<tooltip>tries to remove linear(in the intervall) background</tooltip>
@@ -209,6 +217,7 @@
 			<label>DO STUFF</label>
 			<pos>120,480</pos>
 			<size>144,24</size>
+			<hidden>1</hidden>
 			<handler function="On_DO_STUFF_Click" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxButton" name="ID_BUTTON12" variable="PEAKS" member="yes">
@@ -229,7 +238,7 @@
 			<label>Set Zero</label>
 			<pos>16,280</pos>
 			<size>88,24</size>
-			<tooltip>sets graph to 0 from Start to End</tooltip>
+			<tooltip>sets graph to 0 from Start-value to End-value</tooltip>
 			<handler function="On_set_zero_Click" entry="EVT_BUTTON" />
 		</object>
 		<object class="wxTextCtrl" name="ID_set_zero_start" variable="set_zero_start" member="yes">

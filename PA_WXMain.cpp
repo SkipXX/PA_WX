@@ -21,6 +21,7 @@
 ///
 
 //(*InternalHeaders(PA_WXFrame)
+#include <wx/font.h>
 #include <wx/intl.h>
 #include <wx/string.h>
 //*)
@@ -133,8 +134,9 @@ PA_WXFrame::PA_WXFrame(wxWindow* parent,wxWindowID id) :
     wxMenu* Menu2;
     wxMenuBar* MenuBar1;
 
-    Create(parent, wxID_ANY, _("This is an application."), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
+    Create(parent, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE, _T("wxID_ANY"));
     SetClientSize(wxSize(400,500));
+    SetMaxSize(wxSize(440,550));
     StaticBox6 = new wxStaticBox(this, ID_STATICBOX6, _("Peak Calculations"), wxPoint(216,136), wxSize(176,144), 0, _T("ID_STATICBOX6"));
     plot_peaks = new wxCheckBox(this, ID_CHECKBOX3, _("Plot Peaks"), wxPoint(224,192), wxSize(88,40), 0, wxDefaultValidator, _T("ID_CHECKBOX3"));
     plot_peaks->SetValue(false);
@@ -144,7 +146,9 @@ PA_WXFrame::PA_WXFrame(wxWindow* parent,wxWindowID id) :
     StaticBox3->SetToolTip(_("tries to remove linear(in the intervall) background"));
     StaticBox4 = new wxStaticBox(this, ID_STATICBOX4, _("Cut Points"), wxPoint(16,200), wxSize(176,56), 0, _T("ID_STATICBOX4"));
     StaticBox2 = new wxStaticBox(this, ID_STATICBOX2, wxEmptyString, wxPoint(8,104), wxSize(192,48), 0, _T("ID_STATICBOX2"));
-    dPhi = new wxStaticText(this, ID_dPhi, _("dPhi:"), wxPoint(16,80), wxSize(40,24), 0, _T("ID_dPhi"));
+    dPhi = new wxStaticText(this, ID_dPhi, _("dTheta:"), wxPoint(8,80), wxSize(40,24), 0, _T("ID_dPhi"));
+    wxFont dPhiFont(9,wxFONTFAMILY_SWISS,wxFONTSTYLE_NORMAL,wxFONTWEIGHT_NORMAL,false,wxEmptyString,wxFONTENCODING_DEFAULT);
+    dPhi->SetFont(dPhiFont);
     dPhi->SetToolTip(_("distance between points on X axes"));
     StaticBox1 = new wxStaticBox(this, ID_STATICBOX1, wxEmptyString, wxPoint(272,360), wxSize(120,80), 0, _T("ID_STATICBOX1"));
     gnuplot_plot = new wxButton(this, ID_BUTTON1, _("gnuplot <<"), wxPoint(8,8), wxSize(88,24), 0, wxDefaultValidator, _T("ID_BUTTON1"));
@@ -175,7 +179,7 @@ PA_WXFrame::PA_WXFrame(wxWindow* parent,wxWindowID id) :
     dPhi_textbox->SetToolTip(_("distance between points on X axes"));
     remove_noise_K = new wxTextCtrl(this, ID_TEXTCTRL4, _("5"), wxPoint(160,120), wxSize(32,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL4"));
     remove_noise_K->SetToolTip(_("number of points to left/right in the kernel density estimation"));
-    remove_background = new wxButton(this, ID_BUTTON8, _("start"), wxPoint(112,176), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON8"));
+    remove_background = new wxButton(this, ID_BUTTON8, _("Start"), wxPoint(112,176), wxSize(80,24), 0, wxDefaultValidator, _T("ID_BUTTON8"));
     remove_background->SetToolTip(_("tries to remove linear(in the intervall) background"));
     remove_background_K = new wxTextCtrl(this, ID_TEXTCTRL5, _("200"), wxPoint(64,176), wxSize(40,21), 0, wxDefaultValidator, _T("ID_TEXTCTRL5"));
     remove_background_K->SetToolTip(_("number of points to left/right in the intervall"));
@@ -198,12 +202,13 @@ PA_WXFrame::PA_WXFrame(wxWindow* parent,wxWindowID id) :
     plot_peaks_type->SetSelection( plot_peaks_type->Append(_("S4 (Entropy)")) );
     plot_peaks_type->SetToolTip(_("different function for peak finding algorithm"));
     DO_STUFF = new wxButton(this, ID_BUTTON11, _("DO STUFF"), wxPoint(120,480), wxSize(144,24), 0, wxDefaultValidator, _T("ID_BUTTON11"));
+    DO_STUFF->Hide();
     PEAKS = new wxButton(this, ID_BUTTON12, _("Compare"), wxPoint(224,240), wxSize(88,31), 0, wxDefaultValidator, _T("ID_BUTTON12"));
     PEAKS->SetToolTip(_("tries to find peaks and compares with database"));
     PEAKS_epsilon = new wxTextCtrl(this, ID_PEAKS_epsilon, _("0.2"), wxPoint(344,248), wxSize(40,21), 0, wxDefaultValidator, _T("ID_PEAKS_epsilon"));
     PEAKS_epsilon->SetToolTip(_("epsion; max distance to database to identify peak"));
     set_zero = new wxButton(this, ID_set_zero, _("Set Zero"), wxPoint(16,280), wxSize(88,24), 0, wxDefaultValidator, _T("ID_set_zero"));
-    set_zero->SetToolTip(_("sets graph to 0 from Start to End"));
+    set_zero->SetToolTip(_("sets graph to 0 from Start-value to End-value"));
     set_zero_start = new wxTextCtrl(this, ID_set_zero_start, _("0"), wxPoint(64,312), wxSize(40,24), 0, wxDefaultValidator, _T("ID_set_zero_start"));
     set_zero_start->SetToolTip(_("startvalue for X axis to set zero"));
     set_zero_end = new wxTextCtrl(this, ID_set_zero_end, _("120"), wxPoint(64,344), wxSize(40,24), 0, wxDefaultValidator, _T("ID_set_zero_end"));
@@ -509,6 +514,8 @@ void PA_WXFrame::Onremove_backgroundClick(wxCommandEvent& event)
         int cut_low = std::stoi(static_cast<string>(remove_background_cut_low->GetValue()));
 
         SAVE()
+        if(cut_high < 0 || cut_low < 0 || K < 0){Error_Out("No negativ values!");return;}
+        if(cut_high+cut_low > 2*K){Error_Out("Cutoff values are too big.");return;}
 
         graph.remove_background(K,cut_high,cut_low);
     }//!BETTER ERROR HANDLING
@@ -526,10 +533,17 @@ void PA_WXFrame::On_DFT_Click(wxCommandEvent& event)
     else{graph.DFT_MT();}
 
     if(graph.isFourier){
+        check_auto_N_Norm->SetValue(true);
         AUTO_NORM()
     }
+    else{
+        check_auto_N_Norm->SetValue(false);
+    }
+
 
     graph.isFourier = !graph.isFourier;
+
+    plot_peaks->SetValue(false);
 
     AUTO_PLOT()
 }
@@ -622,12 +636,14 @@ void PA_WXFrame::On_PEAKS_Click(wxCommandEvent& event)
     On_plot_Click(event);//!plotting needs to happen because peaks are calculated there, which is indeed stupid
 
     //SORTING FOR DESCENDING Y
-    auto myCompare = [](const std::pair<double,double>& a, const std::pair<double,double>& b){return a.second>b.second;};
+    auto myCompare = [](const std::pair<double,double>& a, const std::pair<double,double>& b){return a.first<b.first;};
     std::sort(peaks.begin(),peaks.end(),myCompare);
 
     //FUNCTION FOR SORTING TUPLE VECTOR (NEEDED LATER)
-    auto myCompTuple = [](const std::tuple<double,double,std::string>& a, const std::tuple<double,double,std::string>& b){
+    auto myCompTupleY = [](const std::tuple<double,double,std::string>& a, const std::tuple<double,double,std::string>& b){
                             return std::get<1>(a)>std::get<1>(b);};
+    auto myCompTupleX = [](const std::tuple<double,double,std::string>& a, const std::tuple<double,double,std::string>& b){
+                            return std::get<0>(a)>std::get<0>(b);};
 
     ///read in database //! SHOULD MAYBE NOT HAPPEN HERE (EVERY TIME)
     std::ifstream in_database("database.txt");
@@ -655,7 +671,7 @@ void PA_WXFrame::On_PEAKS_Click(wxCommandEvent& event)
     for(const auto& ii : peaks){
         X=ii.first;
         Y=ii.second;
-        found_name="NONE";
+        found_name="_NONE";
         found_matches.clear();
 
         for(const auto& jj : database){
@@ -667,15 +683,15 @@ void PA_WXFrame::On_PEAKS_Click(wxCommandEvent& event)
                 found_matches.push_back(std::make_tuple(xx,yy,found_name));
            }
         }
-        std::sort(found_matches.begin(),found_matches.end(),myCompTuple);
+        std::sort(found_matches.begin(),found_matches.end(),myCompTupleY);
 
         std::stringstream temp_ss("");
         temp_ss << X << '\t' << Y << '\t';;
         std::string temp_string(temp_ss.str());
         temp_ss << '\n';
 
-        if(found_name!="NONE"){//!I HEREBY DECLARE THAT NO DATA FILE SHALL EVER BE NAMED "NONE"
-            std::sort(found_matches.begin(),found_matches.end(),myCompTuple);
+        if(found_name!="_NONE"){//!I HEREBY DECLARE THAT NO DATA FILE SHALL EVER BE NAMED "_NONE"
+            std::sort(found_matches.begin(),found_matches.end(),myCompTupleY);
 
             for(const auto& jj : found_matches){
                 temp_ss << "\t\t";//!WEIRD HARDCODED FORMATING
@@ -688,8 +704,9 @@ void PA_WXFrame::On_PEAKS_Click(wxCommandEvent& event)
     }
 
 
-
+    std::ofstream foundfile("found_peaks.txt");
     wxMessageBox(ss.str(),"Found Peaks:",wxOK|wxCENTRE);
+    foundfile << ss.str();
 }
 
 void PA_WXFrame::On_PEAK_multiplication_Click(wxCommandEvent& event)
@@ -776,11 +793,11 @@ void PA_WXFrame::On_set_zero_Click(wxCommandEvent& event)
     }catch(...){Error_Out("Values are erroneous.");return;}
 
     for(int ii=0;ii<N;++ii){//get first point which is higher
-        if(graph.X(ii) > startPhi){startPoint=ii;break;}
+        if(graph.X(ii) >= startPhi){startPoint=ii;break;}
     }
 
     for(int ii=startPoint;ii<N;++ii){
-        if(graph.X(ii) > endPhi){endPoint=ii;break;}
+        if(graph.X(ii) >= endPhi){endPoint=ii;break;}
     }
 
     SAVE()
@@ -813,11 +830,10 @@ void PA_WXFrame::On_standard_format_Click(wxCommandEvent& event)
 {
     SAVE()
 
-    graph.format(0.01);
-    graph.remove_noise(0.01,5);
-    graph.remove_background(200,200,150);
     graph.format_ALL(0.01);
-    graph.neg_zero();
+    graph.remove_noise(0.01,5);
+    graph.remove_background(200,200,200);
+//    graph.neg_zero();
 
     plot_peaks->SetValue(true);
 
@@ -827,7 +843,7 @@ void PA_WXFrame::On_standard_format_Click(wxCommandEvent& event)
 
 void PA_WXFrame::On_show_again_Click(wxCommandEvent& event)
 {
-    std::system("products.txt");
+    wxExecute("notepad products.txt");
 }
 
 void PA_WXFrame::On_add_peak_Click(wxCommandEvent& event)

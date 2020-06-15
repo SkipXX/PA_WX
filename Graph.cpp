@@ -144,7 +144,7 @@ Graph& Graph::KDE_format(const double dPhi,double K, int K_type, const double st
 
     //TYPES OF KERNELS
     //x: -1 < x < 1
-    auto K_Epanechnikov = [](const double& x){return 0.75*(1 - x*x);};
+    auto K_Epanechnikov = [](const double& x){return 0.75*(1 - x*x);};//!THIS DOES NOT ACTUALLY HAVE TO BE CALCULATED EVERY TIME
 //    auto K_Gaussian = [](const double& x){static constexpr double A = 1/sqrt(2*3.14159265358);return A*log(-0.5*x*x);};
 //    auto K_Triangular = [](const double& x){return (1 - abs(x));};
     //
@@ -355,7 +355,7 @@ double S1(const Graph& graph,int ii,int k=20){
     int N = graph.size();
     if(ii-k < 0 || ii+k >= N) return false; //exclude points at start and end
 
-    auto dY = [graph,ii,k](int kk){return graph.Y(ii)-graph.Y(kk);};
+    auto dY = [graph,ii](int kk){return graph.Y(ii)-graph.Y(kk);};
 
 
     max_left = dY(ii-k);
@@ -376,7 +376,7 @@ double S2(const Graph& graph,int ii,int k=10){
     int N = graph.size();
     if(ii-k < 0 || ii+k >= N) return 0; //exclude points at start and end
 
-    auto dY = [graph,ii,k](int kk){return graph.Y(ii)-graph.Y(kk);};
+    auto dY = [graph,ii](int kk){return graph.Y(ii)-graph.Y(kk);};
     for(int jj=ii-k;jj<ii;++jj){
         left+=dY(jj);
     }
@@ -405,7 +405,7 @@ return graph.Y(ii)-0.5*(left+right)/k;
 
 //! CREATE INDEPENDENT RHO FKT FOR KDE
 
-double S4(Graph& graph,int ii,int k=25){//!SHOULD BE TWO DIFFERENET K
+double S4(Graph& graph,int ii,int k=25){
     double Hmit=0,Hohne=0;
     //static constexpr double A=1.0/sqrt(2*3.21415926);
     double YY=graph.Y(ii);

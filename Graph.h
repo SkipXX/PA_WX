@@ -1,8 +1,6 @@
 #ifndef _MY_GRAPH_
 #define _MY_GRAPH_
 
-
-
 #include <vector>
 #include <iostream>
 #include <utility>
