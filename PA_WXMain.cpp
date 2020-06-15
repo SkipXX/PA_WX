@@ -866,7 +866,7 @@ void PA_WXFrame::On_clear_manual_peaks_Click(wxCommandEvent& event)
 
 void PA_WXFrame::On_HowToUse_Selected(wxCommandEvent& event)
 {
-    wxExecute("notepad README.txt");
+    wxLaunchDefaultBrowser("https://github.com/SkipXX/PA_WX/blob/master/Documentation.pdf");
 }
 
 void PA_WXFrame::On_WhatIsKDE_Selected(wxCommandEvent& event)
